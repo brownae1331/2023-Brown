@@ -1,0 +1,5 @@
+print("Enter an integer: ")
+integer = int(input())
+print("Enter a divisor: ")
+divisor = int(input())
+print(integer // divisor, "remeinder", integer % divisor)
