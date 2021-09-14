@@ -1,15 +1,13 @@
 message = input()
-cypher = ""
 for i in range(len(message)):
     Ascii = ord(message[i])
-    if Ascii < 97:
-         cypher[i] = chr(Ascii + 34)
+    if Ascii == 32:
+        print(chr(Ascii), end="")
     elif Ascii == 121:
-        cypher[i] = chr(97)
+        print(chr(97), end="")
     elif Ascii == 122:
-        cypher[i] = chr(98)
-    elif Ascii == 32:
-        cypher[i] = " "
+        print(chr(98), end="")
+    elif Ascii < 97 and Ascii > 64:
+        print(chr(Ascii + 34), end="")
     else: 
-        cypher[i] = chr(Ascii + 2)
-print(cypher)
+        print(chr(Ascii + 2), end="")
