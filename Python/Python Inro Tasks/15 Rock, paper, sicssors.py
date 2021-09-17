@@ -10,6 +10,7 @@ if rnd == 1:
         print("You won")
     elif player == 'S':
         print("You lost")
+
 elif rnd == 2:
     print("The computer chose paper")
     if player == 'R':
@@ -18,6 +19,7 @@ elif rnd == 2:
         print("It's a draw")
     elif player == 'S':
         print("You won")
+
 elif rnd == 3:
     print("The computer chose sissors")
     if player == 'R':
