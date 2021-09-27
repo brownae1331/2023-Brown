@@ -1,13 +1,5 @@
+body{background-color: #c2f7ff; font-family:candara; font-size:12pt}
 #header {background-color: #b0ffad; height: 150x; width: 100%;}
 #header h1{text-align:center; vertical-align:middle; line-height:200px}
-#nav{background-color: #fcf8c0; height: 100px;}
-#nav li{display: inline; vertical-align: middle; text-align: middle;}
-#Content{background-color: #f6bdff;}
-
-#lion {
-    margin-right: 0px;
-}
-
-#Penguin{
-    margin-left: 20px;
-}
+.nav{background-color:#fcf8c0;text-align:center; height: 50px;}
+#nav{background-color:#f6e1de;text-align:center}
