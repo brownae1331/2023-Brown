@@ -33,7 +33,7 @@
                             <p class="card-text">The lion (Panthera leo) is a large felid of the genus 
                             Panthera native to Africa and India. It has a muscular, deep-chested body, 
                             short, rounded head, round ears, and a hairy tuft at the end of its tail.</p>
-                            <a href="https://en.wikipedia.org/wiki/Lion" class="btn btn-primary">See more about Lions</a>
+                            <a href="https://en.wikipedia.org/wiki/Lion" class="btn btn-primary" target="_blank">See more about Lions</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,21 @@
                                 are a group of aquatic flightless birds. They live almost exclusively in the southern hemisphere: only one 
                                 species, the Galápagos penguin, is found north of the Equator. Highly adapted for life in the water, penguins 
                                 have countershaded dark and white plumage and flippers for swimming.</p>
-                            <a href="https://en.wikipedia.org/wiki/Lion" class="btn btn-primary">See more about Lions</a>
+                            <a href="https://en.wikipedia.org/wiki/Lion" class="btn btn-primary" target="_blank">See more about Lions</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="Giraffe.jpg" class="car-img-top"> 
+                        <div class="card-body">
+                            <h5 class="card-title">Penguin</h5>
+                            <p class="card-text">The giraffe (Giraffa) is an African artiodactyl mammal, the tallest living terrestrial 
+                                animal and the largest ruminant. It is traditionally considered to be one species, Giraffa camelopardalis, with nine 
+                                subspecies. However, the existence of up to nine extant giraffe species has been described, based upon research into 
+                                the mitochondrial and nuclear DNA, as well as morphological measurements of Giraffa.</p>
+                            <a href="https://en.wikipedia.org/wiki/Lion" class="btn btn-primary" target="_blank">See more about Lions</a>
                         </div>
                     </div>
                 </div>
@@ -55,16 +69,17 @@
         </div>
 
         <h2>Please fill in the form</h2>
-        <form>
-            <label for="fname">First name:</label><br>
-            <input type="text" id="fname" name="fname"><br>
-            <label for="lname">Last name:</label><br>
-            <input type="text" id="lname" name="lname"><br>
-            <label for="email">E-Mail:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="pword">Password:</label><br>
-            <input type="password" id="pword" name="pword"><br><br>
-            <input type="submit" value="Submit">    
-        </form>      
-    </body>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="fnameInput" placeholder="First Name">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="lnameInput" placeholder="Last Name">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="emailInput" placeholder="E-Mail">
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password"> 
+        </div>
+    </body> 
 </html>
