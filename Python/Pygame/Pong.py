@@ -1,77 +1,68 @@
 import pygame
 
-# Define some colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
+# Define colors
+Black = (0, 0, 0)
+White = (255, 255, 255)
+Red = (255, 0, 0)
 
 pygame.init()
 
-# Set the width and height of the screen [width, height]
+# Set screen size
 size = (700, 500)
 screen = pygame.display.set_mode(size)
-player1y = 175
-player2y = 175
-p1Speed = 0
-p2Speed = 0
-xBall = 300
-yBall = 400
-ballSpeed = 1
-yoffset = 3
-xoffset = 3
 pygame.display.set_caption("My Game")
 
-# Loop until the user clicks the close button.
+# Set Variable
+player1y, player2y = 175, 175
+p1Speed, p2Speed = 0, 0
+p1score, p2score = 0, 0
+xBall, yBall = 350, 250
+ballSpeed = 1
+yoffset, xoffset = 3, 3
+smallfont = pygame.font.SysFont("comicsansms", 30)
+
+
+# Loop until user clicks the close button
 done = False
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
-# -------- Main Program Loop -----------
+# -------- Game Loop -----------
 while not done:
-    # --- Main event loop
-
-    # --- Game logic should go here
-
-    if ((yBall > player1y + 200 or yBall < player1y - 10) and xBall < 10) or ((yBall > player2y + 200 or yBall < player2y - 10) and xBall > 690):
-        xBall = 350
-        yBall = 250
-        ballSpeed = 1
-    elif xBall <= 10 and xBall > 5 or xBall >= 665 and xBall < 700:
-        xoffset = xoffset * -1
-    if yBall <= 0 or yBall >= 485:
-        yoffset = yoffset * -1
-
+    # When pygame.event is used
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
 
-    # User pressed down on a key
+        # When key is pressed down
         elif event.type == pygame.KEYDOWN:
-            # Figure out if it was an arrow key. If so
-            # adjust speed.
-            if event.key == pygame.K_UP:
-                p1Speed = -3
-            elif event.key == pygame.K_DOWN:
-                p1Speed = 3
-            # Player2 controls
+            # Ajust speed when key is pressed down
+            # Player 1
             if event.key == pygame.K_w:
-                p2Speed = -3
+                p1Speed = -3
             elif event.key == pygame.K_s:
+                p1Speed = 3
+
+            # Player 2
+            if event.key == pygame.K_UP:
+                p2Speed = -3
+            elif event.key == pygame.K_DOWN:
                 p2Speed = 3
 
-    # User let up on a key
+        # When key is let up
         elif event.type == pygame.KEYUP:
-            # If it is an arrow key, reset vector back to zero
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                p1Speed = 0
+            # Ajust speed to zero when key is let up
+            # Player 1
             if event.key == pygame.K_w or event.key == pygame.K_s:
+                p1Speed = 0
+
+            # Player 2
+            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 p2Speed = 0
 
-    # --- Screen-clearing code goes here
     # Move the object according to the speed vector.
-    # Player 1
+    # --- Player 1
     if player1y <= 300 and player1y >= 0:
         player1y += p1Speed
     elif player1y < 0:
@@ -79,7 +70,7 @@ while not done:
     elif player1y > 300:
         player1y -= 1
 
-    # Player2
+    # --- Player 2
     if player2y <= 300 and player2y >= 0:
         player2y += p2Speed
     elif player2y < 0:
@@ -87,29 +78,47 @@ while not done:
     elif player2y > 300:
         player2y -= 1
 
-    # Ball
+    # --- Ball
     yBall -= yoffset * ballSpeed
     xBall -= xoffset * ballSpeed
 
-    # Speed up game
+    # Lets the ball bounce off objects
+    if((yBall > player1y + 200 or yBall < player1y - 10) and xBall < 10):
+        xBall = 350
+        yBall = 250
+        ballSpeed = 1
+        p2score += 1
+    elif ((yBall > player2y + 200 or yBall < player2y - 10) and xBall > 665):
+        xBall = 350
+        yBall = 250
+        ballSpeed = 1
+        p1score += 1
+    elif xBall <= 10 and xBall > 5 or xBall >= 665 and xBall < 695:
+        xoffset = xoffset * -1
+    if yBall <= 0 or yBall >= 485:
+        yoffset = yoffset * -1
+
+    # Speed up the game over time
     ballSpeed += 0.001
 
-    # Here, we clear the screen to white. Don't put other drawing commands
-    # above this, or they will be erased with this command.
-    # If you want a background image, replace this clear with blit'ing the
-    # background image.
-    screen.fill(BLACK)
+    # Background color
+    screen.fill(Black)
 
-    # --- Drawing code should go here
-    pygame.draw.rect(screen, WHITE, [0, player1y, 10, 200])
-    pygame.draw.rect(screen, WHITE, [690, player2y, 10, 200])
-    pygame.draw.line(screen, WHITE, [350, 0], [350, 500], 6)
-    pygame.draw.ellipse(screen, RED, [xBall, yBall, 25, 25], 0)
-    # --- Go ahead and update the screen with what we've drawn.
+    # Keeps the score of the players
+    textscore1 = smallfont.render(str(p1score), True, White)
+    screen.blit(textscore1, (310, 0))
+    textscore2 = smallfont.render(str(p2score), True, White)
+    screen.blit(textscore2, (370, 0))
+
+    # Drawing code
+    pygame.draw.rect(screen, White, [0, player1y, 10, 200])
+    pygame.draw.rect(screen, White, [690, player2y, 10, 200])
+    pygame.draw.line(screen, White, [350, 0], [350, 500], 6)
+    pygame.draw.ellipse(screen, Red, [xBall, yBall, 25, 25], 0)
     pygame.display.flip()
 
-    # --- Limit to 60 frames per second
+    # limit to 60 frames per second
     clock.tick(60)
 
-# Close the window and quit.
+# Close the window and quit
 pygame.quit()
