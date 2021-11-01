@@ -1,4 +1,3 @@
-from typing import ParamSpecKwargs
 import pygame
 from pygame.constants import K_ESCAPE, KEYDOWN, MOUSEBUTTONDOWN
 
