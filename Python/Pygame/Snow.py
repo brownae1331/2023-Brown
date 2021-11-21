@@ -60,7 +60,6 @@ all_sprites_list = pygame.sprite.Group()
 
 
 for i in range(50):
-    index = 0
     block = Block(BLACK, 20, 15)
 
     block.rect.x = (i * 22)
@@ -70,7 +69,6 @@ for i in range(50):
     all_sprites_list.add(block)
 
 for i in range(50):
-    index = 0
     block = Block(RED, 20, 15)
 
     block.rect.x = (i * 22)
@@ -80,7 +78,6 @@ for i in range(50):
     all_sprites_list.add(block)
 
 for i in range(50):
-    index = 0
     block = Block(BLUE, 20, 15)
 
     block.rect.x = (i * 22)
@@ -145,20 +142,10 @@ while not done:
     yBall -= yoffset * ballSpeed
     xBall -= xoffset * ballSpeed
 
-    if((yBall > playery + 200 or yBall < playery - 10) and xBall < 10):
-        xBall, yBall = 350, 250
-        player1y, player2y = 175, 175
-        ballSpeed = 1
-
-    elif ((yBall > player2y + 200 or yBall < player2y - 10) and xBall > 665):
-        xBall, yBall = 350, 250
-        player1y, player2y = 175, 175
-        ballSpeed = 1
-
-    if xBall <= 10 and xBall > 5 or xBall >= 665 and xBall < 695:
+    if xBall <= 10 and xBall > 5 or xBall >= 690 and xBall < 695:
         xoffset = xoffset * -1
 
-    if yBall <= 0 or yBall >= 485:
+    if yBall <= 0 or yBall >= 390:
         yoffset = yoffset * -1
 
     ball.rect.x = xBall
