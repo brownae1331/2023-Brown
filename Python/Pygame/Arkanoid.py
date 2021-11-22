@@ -103,6 +103,11 @@ while not done:
     if pygame.sprite.collide_rect(ball, paddle) == True:
         yoffset *= -1
 
+    blockHitList = pygame.sprite.spritecollide(paddle, blockList, True)
+
+    for block in blockHitList:
+        yoffset *= -1
+
     # When ball hits block
     blockHitList = pygame.sprite.spritecollide(paddle, blockList, True)
 
