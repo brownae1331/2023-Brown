@@ -21,6 +21,20 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
 
+class PowerUp(pygame.sprite.Sprite):
+    def __init__(self, color, width, height, x, y):
+        super().__init__()
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def powerUpGravity(self):
+        self.rect.x += 1
+        self.rect.y += 1
+
+
 pygame.init()
 
 screenWidth = 700
@@ -122,10 +136,9 @@ while not done:
         yoffset *= -1
         rnd = random.randint(1, 10)
         if rnd == 10:
-            powerUp = Block(YELLOW, 10, 10)
+            powerUp = PowerUp(YELLOW, 10, 10, ball.rect.x, ball.rect.y)
+            PowerUp.powerUpGravity(powerUp)
             allSpritesList.add(powerUp)
-            powerUp.rect.x = powerUpX
-            powerUp.rect.y = powerUpY
 
     allSpritesList.draw(screen)
 
