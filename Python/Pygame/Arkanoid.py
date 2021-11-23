@@ -21,18 +21,22 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
 
-class PowerUp(pygame.sprite.Sprite):
-    def __init__(self, color, width, height, x, y):
+class Paddle(pygame.sprite.Sprite):
+    def __init__(self, color, width, height):
         super().__init__()
         self.image = pygame.Surface([width, height])
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
 
-    def powerUpGravity(self):
-        self.rect.x += 1
-        self.rect.y += 1
+    def movement(self, powerUp):
+        if powerUp == True:
+            speed = 7
+        else:
+            speed = 5
+        return speed
+
+    def changeColor(self, color):
+        self.image.fill(color)
 
 
 pygame.init()
@@ -65,7 +69,7 @@ for i in range(6):
         blockList.add(block)
         allSpritesList.add(block)
 
-paddle = Block(BLACK, 50, 15)
+paddle = Paddle(BLACK, 50, 15)
 allSpritesList.add(paddle)
 
 ball = Block(RED, 10, 10)
@@ -77,37 +81,39 @@ done = False
 
 clock = pygame.time.Clock()
 
-padelX = 350
-padelY = 300
-padelSpeed = 0
+paddleSpeed = 0
+paddleX, paddleY = 350, 300
 xBall, yBall = 350, 250
 ballSpeed = 1
 yoffset, xoffset = 3, 3
+powerUp = False
 
 while not done:
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
 
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                padelSpeed = 5
+                paddleSpeed = Paddle.movement(paddle, powerUp)
             elif event.key == pygame.K_LEFT:
-                padelSpeed = -5
+                paddleSpeed = -Paddle.movement(paddle, powerUp)
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                padelSpeed = 0
-
-    screen.fill(BLUE)
+                paddleSpeed = 0
 
     if paddle.rect.x >= 650:
-        padelX -= 3
+        paddleX -= 3
     if paddle.rect.x <= 0:
-        padelX += 3
-    padelX += padelSpeed
-    paddle.rect.x = padelX
-    paddle.rect.y = padelY
+        paddleX += 3
+    paddleX += paddleSpeed
+
+    paddle.rect.x = paddleX
+    paddle.rect.y = paddleY
+
+    screen.fill(BLUE)
 
     yBall -= yoffset * ballSpeed
     xBall -= xoffset * ballSpeed
@@ -136,9 +142,10 @@ while not done:
         yoffset *= -1
         rnd = random.randint(1, 10)
         if rnd == 10:
-            powerUp = PowerUp(YELLOW, 10, 10, ball.rect.x, ball.rect.y)
-            PowerUp.powerUpGravity(powerUp)
-            allSpritesList.add(powerUp)
+            powerUp = True
+
+    if powerUp == True:
+        Paddle.changeColor(paddle, YELLOW)
 
     allSpritesList.draw(screen)
 
