@@ -30,7 +30,7 @@ class Paddle(pygame.sprite.Sprite):
 
     def movement(self, powerUp):
         if powerUp == True:
-            speed = 7
+            speed = 8
         else:
             speed = 5
         return speed
@@ -87,6 +87,7 @@ xBall, yBall = 350, 250
 ballSpeed = 1
 yoffset, xoffset = 3, 3
 powerUp = False
+count = 0
 
 while not done:
 
@@ -140,12 +141,17 @@ while not done:
 
     for block in blockHitList:
         yoffset *= -1
-        rnd = random.randint(1, 10)
-        if rnd == 10:
+        rnd = random.randint(1, 2)
+        if rnd == 2:
             powerUp = True
+            count = 0
 
-    if powerUp == True:
+    count += 1
+    if powerUp == True and count < 100:
         Paddle.changeColor(paddle, YELLOW)
+    else:
+        Paddle.changeColor(paddle, BLACK)
+        powerUp = False
 
     allSpritesList.draw(screen)
 
