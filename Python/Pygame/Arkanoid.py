@@ -41,8 +41,8 @@ class Paddle(pygame.sprite.Sprite):
 
 pygame.init()
 
-screenWidth = 700
-screenHeight = 400
+screenWidth = 450
+screenHeight = 600
 screen = pygame.display.set_mode([screenWidth, screenHeight])
 
 blockList = pygame.sprite.Group()
@@ -51,6 +51,7 @@ allSpritesList = pygame.sprite.Group()
 for i in range(6):
     if i == 0:
         color = GREY
+
     elif i == 1:
         color = RED
     elif i == 2:
@@ -62,9 +63,9 @@ for i in range(6):
     elif i == 5:
         color = GREEN
     y = 17 * i
-    for ii in range(15):
-        block = Block(color, 45, 15)
-        block.rect.x = (ii * 47)
+    for ii in range(10):
+        block = Block(color, 43, 15)
+        block.rect.x = (ii * 45)
         block.rect.y = y
         blockList.add(block)
         allSpritesList.add(block)
@@ -82,7 +83,7 @@ done = False
 clock = pygame.time.Clock()
 
 paddleSpeed = 0
-paddleX, paddleY = 350, 300
+paddleX, paddleY = 100, 300
 xBall, yBall = 350, 250
 ballSpeed = 1
 yoffset, xoffset = 3, 3
