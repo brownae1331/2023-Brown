@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = 0
 
         if powerUp == True:
-            self.rect.x -= 10
+            self.rect.x -= 30
         else:
             self.rect.x -= 5
 
@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = 430
 
         if powerUp == True:
-            self.rect.x += 10
+            self.rect.x += 30
         else:
             self.rect.x += 5
 
@@ -65,12 +65,32 @@ class Ball(pygame.sprite.Sprite):
         self.velocity[1] = -self.velocity[1]
 
 
+class PowerUp(pygame.sprite.Sprite):
+    def __init__(self, color, width, height, ability):
+        super().__init__()
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.ability = ability
+        self.count = 0
+        self.speedUp = False
+
+    def update(self):
+        self.rect.y += 2.5
+        if pygame.sprite.collide_rect(self, player) == True:
+            self.kill()
+
+        elif self.rect.y < 0:
+            self.kill()
+
+
 pygame.init()
 
 # Size of screen
 screenWidth = 500
 screenHeight = 650
 screen = pygame.display.set_mode([screenWidth, screenHeight])
+
 
 # Adding the blocks
 blockList = pygame.sprite.Group()
@@ -112,6 +132,9 @@ ball.rect.y = 200
 done = False
 clock = pygame.time.Clock()
 
+speedUp = False
+count = 0
+
 # Main game loop
 while not done:
     for event in pygame.event.get():
@@ -121,9 +144,9 @@ while not done:
     # The player movement
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT]:
-        player.moveLeft(powerUp)
+        player.moveLeft(speedUp)
     if key[pygame.K_RIGHT]:
-        player.moveRight(powerUp)
+        player.moveRight(speedUp)
 
     allSpritesList.update()
 
@@ -141,20 +164,36 @@ while not done:
     blockHitList = pygame.sprite.spritecollide(ball, blockList, True)
 
     # Let the ball bounce off the block
-    for block in blockHitList:
+    for i in blockHitList:
         ball.velocity[1] = -ball.velocity[1]
         # 1 - 10 chance of getting a power up when block is hit
-        if random.randint(1, 10):
-            powerUp = True
-            count = 0
+        if random.randint(1, 2) == 2:
+            rnd = random.randint(1, 3)
+            if rnd == 1:
+                powerUp = PowerUp(YELLOW, 15, 7, "speed")
+                powerUp.rect.x = ball.rect.x
+                powerUp.rect.y = ball.rect.y
+                allSpritesList.add(powerUp)
 
-        count += 1
-        # Change color when the power up is active
-        if powerUp == True and count < 100:
-            player.image.fill(YELLOW)
+            elif rnd == 2:
+                powerUp = PowerUp(RED, 15, 7, "yo")
+                powerUp.rect.x = ball.rect.x
+                powerUp.rect.y = ball.rect.y
+                allSpritesList.add(powerUp)
+
+            elif rnd == 3:
+                powerUp = PowerUp(GREEN, 15, 7, "hi")
+                powerUp.rect.x = ball.rect.x
+                powerUp.rect.y = ball.rect.y
+                allSpritesList.add(powerUp)
+
+    # Set how long the speed power up will last
+    if speedUp == True:
+        if count > 30:
+            speedUp = False
+            count = 0
         else:
-            player.image.fill(BLACK)
-            powerUp = False
+            count += 1
 
     # Draw the sprite on the screen
     allSpritesList.draw(screen)
@@ -162,6 +201,5 @@ while not done:
     clock.tick(60)
     screen.fill(BLUE)
 
-    powerUp = False
 
 pygame.quit()
