@@ -77,10 +77,7 @@ class PowerUp(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += 2.5
-        if pygame.sprite.collide_rect(self, player) == True:
-            self.kill()
-
-        elif self.rect.y < 0:
+        if pygame.sprite.collide_rect(self, player) == True or self.rect.y < 0:
             self.kill()
 
 
@@ -186,6 +183,16 @@ while not done:
                 powerUp.rect.x = ball.rect.x
                 powerUp.rect.y = ball.rect.y
                 allSpritesList.add(powerUp)
+
+    try:
+        powerUp
+    except NameError:
+        pass
+    else:
+        if pygame.sprite.collide_rect(powerUp, player) == True:
+            print("yo")
+            if powerUp.ability == "speed":
+                speedUp = True
 
     # Set how long the speed power up will last
     if speedUp == True:
