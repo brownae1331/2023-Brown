@@ -60,10 +60,6 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
 
-    def bounce(self):
-        self.velocity[0] = -self.velocity[0]
-        self.velocity[1] = -self.velocity[1]
-
 
 class PowerUp(pygame.sprite.Sprite):
     def __init__(self, color, width, height, ability):
