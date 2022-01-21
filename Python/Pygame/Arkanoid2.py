@@ -73,7 +73,7 @@ class PowerUp(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += 2.5
-        if pygame.sprite.collide_rect(self, player) == True or self.rect.y < 0:
+        if pygame.sprite.collide_rect(self, player) == True or self.rect.y <= 10:
             self.kill()
 
 
@@ -160,25 +160,28 @@ while not done:
     for i in blockHitList:
         ball.velocity[1] = -ball.velocity[1]
         # 1 - 10 chance of getting a power up when block is hit
-        if random.randint(1, 2) == 2:
-            rnd = random.randint(1, 3)
-            if rnd == 1:
-                powerUp = PowerUp(YELLOW, 15, 7, "speed")
-                powerUp.rect.x = ball.rect.x
-                powerUp.rect.y = ball.rect.y
-                allSpritesList.add(powerUp)
+        try:
+            powerUp
+        except:
+            if random.randint(1, 1) == 1:
+                rnd = random.randint(1, 3)
+                if rnd == 1:
+                    powerUp = PowerUp(YELLOW, 15, 7, "speed")
+                    powerUp.rect.x = ball.rect.x
+                    powerUp.rect.y = ball.rect.y
+                    allSpritesList.add(powerUp)
 
-            elif rnd == 2:
-                powerUp = PowerUp(RED, 15, 7, "yo")
-                powerUp.rect.x = ball.rect.x
-                powerUp.rect.y = ball.rect.y
-                allSpritesList.add(powerUp)
+                elif rnd == 2:
+                    powerUp = PowerUp(RED, 15, 7, "yo")
+                    powerUp.rect.x = ball.rect.x
+                    powerUp.rect.y = ball.rect.y
+                    allSpritesList.add(powerUp)
 
-            elif rnd == 3:
-                powerUp = PowerUp(GREEN, 15, 7, "hi")
-                powerUp.rect.x = ball.rect.x
-                powerUp.rect.y = ball.rect.y
-                allSpritesList.add(powerUp)
+                elif rnd == 3:
+                    powerUp = PowerUp(GREEN, 15, 7, "hi")
+                    powerUp.rect.x = ball.rect.x
+                    powerUp.rect.y = ball.rect.y
+                    allSpritesList.add(powerUp)
 
     try:
         powerUp
